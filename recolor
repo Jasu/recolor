@@ -2,17 +2,17 @@
 
 PYTHON=`which python33`
 
-if [[ "x$PYTHON" = "x" ]]
+if [ "x$PYTHON" = "x" ]
 then
   PYTHON=`which python3.3`
 fi
 
-if [[ "x$PYTHON" = "x" ]]
+if [ "x$PYTHON" = "x" ]
 then
   PYTHON=`which python3`
 fi
 
-if [[ "x$PYTHON" = "x" ]]
+if [ "x$PYTHON" = "x" ]
 then
   PYTHON=`which python`
 fi
