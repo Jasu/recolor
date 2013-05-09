@@ -41,9 +41,13 @@ cliParser.add_argument('infile', help="Input file names", nargs='+')
 
 def process(inFile, outFile, color, valueFactor):
   image = skimage.io.imread(inFile)
+  alpha = None
+  if image.shape[2] == 4:
+    alpha = image.compress([False, False, False, True], axis=2)
+    image = image.compress([True, True, True, False], axis=2)
+
   colorHSV = colorsys.rgb_to_hsv(*color)
   colorHSV = [colorHSV[0], colorHSV[1], colorHSV[2]]
-  pprint(colorHSV)
   imageHSV = skimage.color.rgb2hsv(image)
   originalHSV = findMostSaturatedColor(imageHSV)
 
@@ -74,8 +78,13 @@ def process(inFile, outFile, color, valueFactor):
 
   imageProcessedHSV = numpy.dstack((outputH, outputS, outputV))
 
-  imageAddedRGB = skimage.color.hsv2rgb(imageProcessedHSV)
-  skimage.io.imsave(outFile, imageAddedRGB)
+  imageProcessedRGB = skimage.color.hsv2rgb(imageProcessedHSV)
+  if alpha != None:
+    outputR = imageProcessedRGB.compress([True, False, False], axis=2)
+    outputG = imageProcessedRGB.compress([False, True, False], axis=2)
+    outputB = imageProcessedRGB.compress([False, False, True], axis=2)
+    imageProcessedRGB = numpy.dstack((outputR, outputG, outputB, alpha))
+  skimage.io.imsave(outFile, imageProcessedRGB)
 
 def findMostSaturatedColor(imageHSV):
   """
