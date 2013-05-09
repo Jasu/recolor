@@ -37,3 +37,17 @@ Usage
   The output files have their colors shifted so that the most saturated color
   of the image is now red.
 
+### Example 3
+
+    recolor --valuefactor 0.5 --outdir=recolored --color #FF0000 input1.png input2.png
+
+  Valuefactor changes the value (luminosity) of the image towards the value
+  of --color. Valuefactor 1.0 changes the value completely to it, but may 
+  result in artifacts. 
+
+  Creates recolored/input1.png and recolored/input2.png. If the files exist,
+  prompts for overwrite.
+
+  The output files have their colors shifted so that the most saturated color
+  of the image is now red.
+
