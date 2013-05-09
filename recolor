@@ -17,4 +17,5 @@ then
   PYTHON=`which python`
 fi
 
-$PYTHON recolor.py "$@"
+DIR=$(dirname $0)
+$PYTHON $DIR/recolor.py "$@"
